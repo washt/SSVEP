@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <typeinfo> 
 // sleep utils
 #include <chrono>
 #include <thread>
@@ -9,6 +10,9 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+//boost libs
+#include <boost/lexical_cast.hpp>
+
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
@@ -22,15 +26,24 @@ GLfloat vertices[] = {
    0.0f,  0.5f, 0.0f
 };
 
-// static int interval = 200;
+std::string freq;
+std::string id;
 
 int main(int argc, char* argv[])
 {
     int interval = atoi(argv[1]);
-    // std::cout << interval1;
-    std::string freq = std::to_string(interval);
-    std::string id = "Open GL Test " + freq + " Ms";
-    const char *cstr = id.c_str();
+
+    if (interval >= 500)
+    {
+        std::string freq = boost::lexical_cast<std::string>(interval);
+        std::string id = "Open GL Test Calibration";
+    }
+    else
+    {
+        freq = boost::lexical_cast<std::string>(interval);
+        id = freq + " ms";        
+    }
+    const char* cstr = id.c_str();
 
     GLuint VBO;
     GLenum err;
@@ -68,20 +81,21 @@ int main(int argc, char* argv[])
     while(!glfwWindowShouldClose(window))
 
     {
-
+        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
         glfwSetTime(0.0);
         glfwPollEvents();
         glfwSetKeyCallback(window,key_callback);
         glClearColor(1.0f,1.0f,1.0f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glFlush(); 
         glfwSwapBuffers(window);
         std::this_thread::sleep_for(std::chrono::milliseconds(interval));
         glfwPollEvents();
         glfwSetKeyCallback(window,key_callback);
         glClearColor(0.0f,0.0f,0.0f,0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glFlush();
         glfwSwapBuffers(window);
-        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
     }
     // exit program
     glfwDestroyWindow(window);
