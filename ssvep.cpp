@@ -25,23 +25,28 @@ GLfloat vertices[] = {
    0.5f, -0.5f, 0.0f,
    0.0f,  0.5f, 0.0f
 };
-
+int interval;
 std::string freq;
 std::string id;
+std::string cycle;
 
 int main(int argc, char* argv[])
 {
-    int interval = atoi(argv[1]);
+    int cyclespersecond = atoi(argv[1]);
 
-    if (interval >= 500)
-    {
+    if (cyclespersecond >= 500)
+    {   
+        interval = 0;
         freq = boost::lexical_cast<std::string>(interval);
+        cycle = boost::lexical_cast<std::string>(cyclespersecond);
         id = "Open GL Test Calibration";
     }
     else
     {
+        interval = 1000/cyclespersecond;
         freq = boost::lexical_cast<std::string>(interval);
-        id = freq + " ms";        
+        cycle = boost::lexical_cast<std::string>(cyclespersecond);
+        id = cycle + " Hz";        
     }
 
     const char* cstr = id.c_str();
