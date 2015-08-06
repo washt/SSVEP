@@ -35,16 +35,16 @@ int main(int argc, char* argv[])
 
     if (interval >= 500)
     {
-        std::string freq = boost::lexical_cast<std::string>(interval);
-        std::string id = "Open GL Test Calibration";
+        freq = boost::lexical_cast<std::string>(interval);
+        id = "Open GL Test Calibration";
     }
     else
     {
         freq = boost::lexical_cast<std::string>(interval);
         id = freq + " ms";        
     }
-    const char* cstr = id.c_str();
 
+    const char* cstr = id.c_str();
     GLuint VBO;
     GLenum err;
     glfwInit();
@@ -52,7 +52,6 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-
     GLFWwindow* window = glfwCreateWindow(200,100, cstr,NULL,NULL);
     glfwMakeContextCurrent(window);
 
@@ -73,11 +72,10 @@ int main(int argc, char* argv[])
 
     glfwMakeContextCurrent(window);
     glViewport(0,0,800,600);
-
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
 
-    //Event loop
+    //Main event loop
     while(!glfwWindowShouldClose(window))
 
     {
@@ -97,7 +95,7 @@ int main(int argc, char* argv[])
         glFlush();
         glfwSwapBuffers(window);
     }
-    // exit program
+    // clean up and terminate
     glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);
