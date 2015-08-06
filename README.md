@@ -2,11 +2,11 @@
 SSVEP Interface written in OpenGL,GLFW,and GLEW
 
 #Dependencies
-*g++
-*Boost
-*OpenGL
-*GLFW
-*GLEW
+* g++
+* Boost
+* OpenGL
+* GLFW
+* GLEW
 
 Currently builds on linux, but code should compile and run on windows with a custome build script. 
 
